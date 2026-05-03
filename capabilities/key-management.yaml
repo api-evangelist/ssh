@@ -1,0 +1,271 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "SSH Key Management"
+  description: >-
+    Unified workflow capability for SSH key lifecycle management, certificate
+    authority operations, and access control. Enables security and infrastructure
+    teams to manage SSH keys, sign short-lived certificates, control user access
+    via authorized_keys, and maintain known_hosts integrity.
+  tags:
+    - SSH
+    - Key Management
+    - Certificate Authority
+    - Access Control
+    - Security
+    - Infrastructure
+  created: "2026-05-02"
+  modified: "2026-05-02"
+
+binds:
+  - namespace: env
+    keys:
+      SSH_MGMT_API_TOKEN: SSH_MGMT_API_TOKEN
+
+capability:
+  consumes:
+    - import: ssh-key-management
+      location: ./shared/key-management.yaml
+
+  exposes:
+    - type: rest
+      port: 8080
+      namespace: ssh-key-management-workflow-api
+      description: "Unified REST API for SSH key management and certificate authority operations."
+      resources:
+        - path: /v1/keys
+          name: keys
+          description: "SSH key registration"
+          operations:
+            - method: GET
+              name: list-keys
+              description: "List registered SSH public keys"
+              call: "ssh-key-management.list-keys"
+              with:
+                userId: "rest.userId"
+                keyType: "rest.keyType"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: add-key
+              description: "Register a new SSH public key"
+              call: "ssh-key-management.add-key"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/keys/generate
+          name: key-generation
+          description: "Key pair generation"
+          operations:
+            - method: POST
+              name: generate-key-pair
+              description: "Generate a new SSH key pair"
+              call: "ssh-key-management.generate-key-pair"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/keys/{keyId}
+          name: key-detail
+          description: "Individual key management"
+          operations:
+            - method: GET
+              name: get-key
+              description: "Get SSH key details"
+              call: "ssh-key-management.get-key"
+              with:
+                keyId: "rest.keyId"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: DELETE
+              name: delete-key
+              description: "Delete an SSH key"
+              call: "ssh-key-management.delete-key"
+              with:
+                keyId: "rest.keyId"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/certificates
+          name: certificates
+          description: "SSH certificate management"
+          operations:
+            - method: GET
+              name: list-certificates
+              description: "List issued SSH certificates"
+              call: "ssh-key-management.list-certificates"
+              with:
+                principal: "rest.principal"
+                expired: "rest.expired"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: sign-certificate
+              description: "Sign a public key to create a certificate"
+              call: "ssh-key-management.sign-certificate"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/authorized-keys/{username}
+          name: authorized-keys
+          description: "User authorized keys"
+          operations:
+            - method: GET
+              name: get-authorized-keys
+              description: "Get authorized keys for a user"
+              call: "ssh-key-management.get-authorized-keys"
+              with:
+                username: "rest.username"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: add-authorized-key
+              description: "Add a key to user authorized_keys"
+              call: "ssh-key-management.add-authorized-key"
+              with:
+                username: "rest.username"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/known-hosts
+          name: known-hosts
+          description: "Known hosts management"
+          operations:
+            - method: GET
+              name: list-known-hosts
+              description: "List known SSH hosts"
+              call: "ssh-key-management.list-known-hosts"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: add-known-host
+              description: "Add a host to known_hosts"
+              call: "ssh-key-management.add-known-host"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9090
+      namespace: ssh-key-management-mcp
+      transport: http
+      description: "MCP server for AI-assisted SSH key management and certificate operations."
+      tools:
+        - name: list-keys
+          description: "List registered SSH public keys with optional user and type filtering"
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "ssh-key-management.list-keys"
+          with:
+            userId: "tools.userId"
+            keyType: "tools.keyType"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: add-key
+          description: "Register a new SSH public key in the system"
+          hints:
+            readOnly: false
+            idempotent: false
+          call: "ssh-key-management.add-key"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: generate-key-pair
+          description: "Generate a new SSH key pair (ed25519 recommended)"
+          hints:
+            readOnly: false
+            idempotent: false
+          call: "ssh-key-management.generate-key-pair"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-key
+          description: "Get SSH key details including fingerprint and last use"
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "ssh-key-management.get-key"
+          with:
+            keyId: "tools.keyId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: delete-key
+          description: "Delete a registered SSH key"
+          hints:
+            readOnly: false
+            destructive: true
+            idempotent: true
+          call: "ssh-key-management.delete-key"
+          with:
+            keyId: "tools.keyId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: sign-certificate
+          description: "Sign an SSH public key with the CA to create a short-lived certificate"
+          hints:
+            readOnly: false
+            idempotent: false
+          call: "ssh-key-management.sign-certificate"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-certificates
+          description: "List issued SSH certificates with principals and validity periods"
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "ssh-key-management.list-certificates"
+          with:
+            principal: "tools.principal"
+            expired: "tools.expired"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-authorized-keys
+          description: "Get all authorized SSH keys for a user"
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "ssh-key-management.get-authorized-keys"
+          with:
+            username: "tools.username"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: add-authorized-key
+          description: "Add an SSH public key to a user's authorized_keys"
+          hints:
+            readOnly: false
+            idempotent: false
+          call: "ssh-key-management.add-authorized-key"
+          with:
+            username: "tools.username"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-known-hosts
+          description: "List known SSH hosts and their verified public keys"
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "ssh-key-management.list-known-hosts"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: add-known-host
+          description: "Add a host and its public key to the known_hosts database"
+          hints:
+            readOnly: false
+            idempotent: false
+          call: "ssh-key-management.add-known-host"
+          outputParameters:
+            - type: object
+              mapping: "$."

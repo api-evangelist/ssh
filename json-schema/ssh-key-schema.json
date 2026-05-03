@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.openssh.com/schemas/ssh-key",
+  "title": "SSH Key",
+  "description": "Schema for an SSH public key registered in a key management system",
+  "type": "object",
+  "required": ["id", "keyType", "publicKey", "fingerprint"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique key identifier"
+    },
+    "userId": {
+      "type": "string",
+      "description": "Owner user ID"
+    },
+    "keyType": {
+      "type": "string",
+      "enum": ["rsa", "ed25519", "ecdsa", "dsa"],
+      "description": "SSH key algorithm type"
+    },
+    "publicKey": {
+      "type": "string",
+      "description": "Public key in OpenSSH format (e.g., 'ssh-ed25519 AAAA...')",
+      "pattern": "^(ssh-rsa|ssh-ed25519|ecdsa-sha2-nistp256|ecdsa-sha2-nistp384|ecdsa-sha2-nistp521|sk-ssh-ed25519@openssh\\.com) [A-Za-z0-9+/=]+( .*)?$"
+    },
+    "fingerprint": {
+      "type": "string",
+      "description": "SHA-256 fingerprint in format 'SHA256:base64string'",
+      "pattern": "^SHA256:[A-Za-z0-9+/]{43}$"
+    },
+    "comment": {
+      "type": "string",
+      "description": "Key comment, typically user@hostname"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "lastUsedAt": {
+      "type": ["string", "null"],
+      "format": "date-time"
+    }
+  },
+  "$defs": {
+    "SSHCertificate": {
+      "type": "object",
+      "required": ["certificate", "principals", "validAfter", "validBefore"],
+      "properties": {
+        "certificate": {
+          "type": "string",
+          "description": "Signed certificate in OpenSSH certificate format"
+        },
+        "serialNumber": {
+          "type": "integer"
+        },
+        "principals": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "List of authorized principals (usernames or hostnames)"
+        },
+        "validAfter": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "validBefore": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "certType": {
+          "type": "string",
+          "enum": ["user", "host"]
+        },
+        "fingerprint": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

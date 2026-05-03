@@ -1,0 +1,145 @@
+vocabulary:
+  name: SSH Protocol Vocabulary
+  description: >-
+    Key terms, concepts, and operational vocabulary for SSH (Secure Shell)
+    protocol, key management, certificate authorities, and secure remote
+    access infrastructure.
+  version: "1.0"
+  created: "2026-05-02"
+  modified: "2026-05-02"
+  tags:
+    - SSH
+    - Secure Shell
+    - Cryptography
+    - Network Security
+
+  terms:
+    - term: SSH
+      label: Secure Shell
+      description: >-
+        A cryptographic network protocol (RFC 4251-4254) for secure remote login,
+        command execution, and file transfer over unsecured networks. SSH provides
+        confidentiality, integrity, and mutual authentication using public-key
+        cryptography.
+      category: Protocol
+
+    - term: Public Key Authentication
+      label: Public Key Authentication
+      description: >-
+        SSH authentication method where the client proves identity by possessing
+        the private key corresponding to a public key in the server's
+        authorized_keys file. More secure than password authentication.
+      category: Authentication
+
+    - term: authorized_keys
+      label: Authorized Keys File
+      description: >-
+        A file on the SSH server (~/.ssh/authorized_keys) listing public keys
+        permitted to authenticate as a specific user. Each line contains one
+        public key optionally preceded by options restricting its use.
+      category: Configuration
+
+    - term: known_hosts
+      label: Known Hosts File
+      description: >-
+        A file (~/.ssh/known_hosts) storing public key fingerprints of previously
+        connected SSH servers. Used to detect man-in-the-middle attacks. On first
+        connection, the server's key is added; subsequent connections verify it.
+      category: Configuration
+
+    - term: SSH Certificate
+      label: SSH Certificate
+      description: >-
+        An OpenSSH extension to public key authentication where a Certificate
+        Authority signs a public key, producing a certificate that grants access
+        without requiring individual authorized_keys entries. Certificates have
+        built-in expiry and principals.
+      category: Authentication
+
+    - term: Certificate Authority
+      label: SSH Certificate Authority
+      description: >-
+        A trusted entity whose private key signs SSH user and host certificates.
+        The CA's public key is distributed to servers (TrustedUserCAKeys) and
+        clients (known_hosts @cert-authority), enabling automatic trust of
+        all certificates signed by that CA.
+      category: Authentication
+
+    - term: Principal
+      label: Certificate Principal
+      description: >-
+        A username (for user certificates) or hostname (for host certificates)
+        for which a certificate is valid. Multiple principals can be specified,
+        restricting which accounts the certificate can access.
+      category: Authentication
+
+    - term: Key Fingerprint
+      label: Key Fingerprint
+      description: >-
+        A shortened hash of a public key displayed in SHA-256:base64 format
+        (or legacy MD5:hex). Used to verify key identity when comparing keys
+        verbally or in logs, as full keys are too long.
+      category: Security
+
+    - term: ed25519
+      label: Ed25519
+      description: >-
+        An elliptic curve signature algorithm providing fast, secure SSH
+        authentication with small key sizes. The recommended key type for
+        new SSH keys, providing ~128-bit security with a 256-bit key.
+      category: Cryptography
+
+    - term: RSA
+      label: RSA
+      description: >-
+        The traditional SSH public-key algorithm. RSA 4096-bit keys are
+        still acceptable for legacy systems but ed25519 is preferred. RSA
+        2048-bit is the minimum for current security standards.
+      category: Cryptography
+
+    - term: ECDSA
+      label: ECDSA
+      description: >-
+        Elliptic Curve Digital Signature Algorithm used for SSH keys.
+        Supported curves in OpenSSH include nistp256, nistp384, and nistp521.
+      category: Cryptography
+
+    - term: SSH Agent
+      label: SSH Agent
+      description: >-
+        A background process (ssh-agent) that holds decrypted private keys in
+        memory, enabling passwordless SSH authentication throughout a session
+        without keeping the private key unencrypted on disk.
+      category: Tools
+
+    - term: ProxyJump
+      label: ProxyJump
+      description: >-
+        An SSH configuration option (-J or ProxyJump) that routes SSH
+        connections through a bastion/jump host, enabling access to internal
+        network hosts without exposing them directly to the internet.
+      category: Configuration
+
+    - term: Port Forwarding
+      label: SSH Port Forwarding
+      description: >-
+        SSH tunneling feature that forwards TCP connections through an SSH
+        connection. Types include local forwarding (-L), remote forwarding (-R),
+        and dynamic SOCKS proxy (-D).
+      category: Features
+
+    - term: SFTP
+      label: SSH File Transfer Protocol
+      description: >-
+        A secure file transfer protocol running over SSH (not FTP over SSH).
+        SFTP provides file access, transfer, and management capabilities in
+        an encrypted channel.
+      category: Features
+
+    - term: Host Key
+      label: SSH Host Key
+      description: >-
+        A key pair generated on the SSH server at installation time that
+        identifies the server to clients. The server presents its host key
+        during connection setup; clients verify it against known_hosts.
+      category: Authentication

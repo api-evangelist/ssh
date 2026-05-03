@@ -1,0 +1,36 @@
+{
+  "example": "Sign SSH Certificate",
+  "operation": "signCertificate",
+  "request": {
+    "method": "POST",
+    "url": "https://api.openssh.example.com/v1/certificates",
+    "headers": {
+      "Authorization": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "publicKey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBm3b1TcFkBRm3GxJlZbqcZCj9ej7l6TdZHUfp5R1234",
+      "principals": ["jane", "admin"],
+      "validityPeriod": "8h",
+      "certType": "user",
+      "extensions": {
+        "permit-pty": "",
+        "permit-user-rc": ""
+      }
+    }
+  },
+  "response": {
+    "status": 201,
+    "contentType": "application/json",
+    "body": {
+      "certificate": "ssh-ed25519-cert-v01@openssh.com AAAAIHNzaC1lZDI1NTE5LWNlcnQtdjAxQG9wZW5zc2guY29tAAAA...",
+      "serialNumber": 42,
+      "principals": ["jane", "admin"],
+      "validAfter": "2026-05-02T10:00:00Z",
+      "validBefore": "2026-05-02T18:00:00Z",
+      "keyId": "jane-workstation-2026-05-02",
+      "certType": "user",
+      "fingerprint": "SHA256:Xk9mNpQrStUvWxYzAbCdEfGhIjKlMnOpQrStUvWxYz0"
+    }
+  }
+}

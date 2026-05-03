@@ -1,0 +1,614 @@
+openapi: 3.1.0
+info:
+  title: SSH Key Management API
+  description: >-
+    A REST API for managing SSH keys, certificates, and access policies
+    in infrastructure environments. Provides endpoints for key generation,
+    certificate signing, authorized keys management, and host key verification.
+    This represents common SSH management capabilities available via OpenSSH
+    tooling and SSH certificate authority implementations.
+  version: "1.0"
+  contact:
+    name: OpenSSH Project
+    url: https://www.openssh.com/
+  license:
+    name: BSD License
+    url: https://www.openssh.com/portable.html
+servers:
+  - url: https://api.openssh.example.com/v1
+    description: SSH Management API
+
+security:
+  - BearerAuth: []
+
+tags:
+  - name: Keys
+    description: SSH key pair management
+  - name: Certificates
+    description: SSH certificate authority and certificate signing
+  - name: Authorized Keys
+    description: Authorized keys management for users
+  - name: Known Hosts
+    description: Known hosts verification and management
+  - name: Host Keys
+    description: SSH server host key management
+
+paths:
+  /keys:
+    get:
+      operationId: listKeys
+      summary: List SSH Keys
+      description: >-
+        Returns a list of SSH public keys registered in the system,
+        including metadata such as key type, fingerprint, and comment.
+      tags:
+        - Keys
+      parameters:
+        - name: userId
+          in: query
+          description: Filter keys by user
+          schema:
+            type: string
+        - name: keyType
+          in: query
+          schema:
+            type: string
+            enum: [rsa, ed25519, ecdsa, dsa]
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 50
+      responses:
+        '200':
+          description: SSH key list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KeyListResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+    post:
+      operationId: addKey
+      summary: Add SSH Key
+      description: >-
+        Registers a new SSH public key in the system. The public key
+        can then be added to authorized_keys or used for certificate signing.
+      tags:
+        - Keys
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KeyCreate'
+      responses:
+        '201':
+          description: Key registered
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SSHKey'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /keys/generate:
+    post:
+      operationId: generateKeyPair
+      summary: Generate Key Pair
+      description: >-
+        Generates a new SSH key pair (private + public) of the specified type.
+        Returns the public key and an encrypted private key. Use ed25519 for
+        new keys; RSA 4096-bit for legacy system compatibility.
+      tags:
+        - Keys
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KeyGenerateRequest'
+      responses:
+        '201':
+          description: Key pair generated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KeyPair'
+
+  /keys/{keyId}:
+    get:
+      operationId: getKey
+      summary: Get SSH Key
+      description: Returns details for a specific registered SSH key.
+      tags:
+        - Keys
+      parameters:
+        - $ref: '#/components/parameters/KeyId'
+      responses:
+        '200':
+          description: Key details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SSHKey'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    delete:
+      operationId: deleteKey
+      summary: Delete SSH Key
+      description: Removes a registered SSH key from the system.
+      tags:
+        - Keys
+      parameters:
+        - $ref: '#/components/parameters/KeyId'
+      responses:
+        '204':
+          description: Key deleted
+
+  /certificates:
+    post:
+      operationId: signCertificate
+      summary: Sign SSH Certificate
+      description: >-
+        Signs an SSH public key with the certificate authority, creating
+        a short-lived SSH certificate. Certificates enable time-limited access
+        without managing authorized_keys files.
+      tags:
+        - Certificates
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CertificateSignRequest'
+      responses:
+        '201':
+          description: Certificate signed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SSHCertificate'
+
+    get:
+      operationId: listCertificates
+      summary: List Certificates
+      description: Returns issued SSH certificates with their validity periods and principals.
+      tags:
+        - Certificates
+      parameters:
+        - name: principal
+          in: query
+          description: Filter by principal (username)
+          schema:
+            type: string
+        - name: hostKey
+          in: query
+          description: Filter host certificates
+          schema:
+            type: boolean
+        - name: expired
+          in: query
+          description: Include expired certificates
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '200':
+          description: Certificate list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CertificateListResponse'
+
+  /authorized-keys/{username}:
+    get:
+      operationId: getAuthorizedKeys
+      summary: Get Authorized Keys
+      description: Returns the authorized keys configured for a specific user.
+      tags:
+        - Authorized Keys
+      parameters:
+        - name: username
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Authorized keys
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthorizedKeysResponse'
+
+    post:
+      operationId: addAuthorizedKey
+      summary: Add Authorized Key
+      description: Adds a public key to a user's authorized_keys.
+      tags:
+        - Authorized Keys
+      parameters:
+        - name: username
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthorizedKeyCreate'
+      responses:
+        '201':
+          description: Authorized key added
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthorizedKey'
+
+  /authorized-keys/{username}/{keyId}:
+    delete:
+      operationId: removeAuthorizedKey
+      summary: Remove Authorized Key
+      description: Removes a key from a user's authorized_keys.
+      tags:
+        - Authorized Keys
+      parameters:
+        - name: username
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: keyId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Key removed
+
+  /known-hosts:
+    get:
+      operationId: listKnownHosts
+      summary: List Known Hosts
+      description: Returns the list of known SSH hosts and their public keys.
+      tags:
+        - Known Hosts
+      parameters:
+        - name: hostname
+          in: query
+          description: Filter by hostname
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Known hosts list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KnownHostsResponse'
+
+    post:
+      operationId: addKnownHost
+      summary: Add Known Host
+      description: Adds a host and its public key to the known_hosts database.
+      tags:
+        - Known Hosts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KnownHostCreate'
+      responses:
+        '201':
+          description: Host added
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KnownHost'
+
+  /host-keys/{hostname}:
+    get:
+      operationId: getHostKeys
+      summary: Get Host Keys
+      description: Returns the SSH host keys for a specific server.
+      tags:
+        - Host Keys
+      parameters:
+        - name: hostname
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Host keys
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HostKeyResponse'
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  parameters:
+    KeyId:
+      name: keyId
+      in: path
+      required: true
+      description: SSH key identifier
+      schema:
+        type: string
+
+  responses:
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    BadRequest:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+  schemas:
+    SSHKey:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique key identifier
+        userId:
+          type: string
+          description: Owner user ID
+        keyType:
+          type: string
+          enum: [rsa, ed25519, ecdsa, dsa]
+        publicKey:
+          type: string
+          description: Public key in OpenSSH format
+        fingerprint:
+          type: string
+          description: SHA-256 fingerprint of the key
+        comment:
+          type: string
+          description: Key comment (typically user@host)
+        createdAt:
+          type: string
+          format: date-time
+        lastUsedAt:
+          type: string
+          format: date-time
+          nullable: true
+
+    KeyCreate:
+      type: object
+      required: [publicKey]
+      properties:
+        publicKey:
+          type: string
+          description: SSH public key in OpenSSH format
+        comment:
+          type: string
+        userId:
+          type: string
+
+    KeyGenerateRequest:
+      type: object
+      properties:
+        keyType:
+          type: string
+          enum: [rsa, ed25519, ecdsa]
+          default: ed25519
+        bits:
+          type: integer
+          description: Key size in bits (for RSA only)
+          enum: [2048, 3072, 4096]
+        comment:
+          type: string
+        passphrase:
+          type: string
+          description: Optional passphrase to encrypt the private key
+
+    KeyPair:
+      type: object
+      properties:
+        publicKey:
+          type: string
+          description: Public key in OpenSSH format
+        privateKey:
+          type: string
+          description: Private key (PEM or OpenSSH format, possibly encrypted)
+        fingerprint:
+          type: string
+        keyType:
+          type: string
+
+    KeyListResponse:
+      type: object
+      properties:
+        keys:
+          type: array
+          items:
+            $ref: '#/components/schemas/SSHKey'
+        total:
+          type: integer
+        page:
+          type: integer
+
+    CertificateSignRequest:
+      type: object
+      required: [publicKey, principals]
+      properties:
+        publicKey:
+          type: string
+          description: Public key to sign in OpenSSH format
+        principals:
+          type: array
+          items:
+            type: string
+          description: List of usernames or hostnames the certificate is valid for
+        validityPeriod:
+          type: string
+          description: Certificate validity period (e.g., 8h, 1d, 30d)
+          default: "8h"
+        certType:
+          type: string
+          enum: [user, host]
+          default: user
+        extensions:
+          type: object
+          description: Certificate extensions (e.g., permit-pty, permit-user-rc)
+
+    SSHCertificate:
+      type: object
+      properties:
+        certificate:
+          type: string
+          description: Signed certificate in OpenSSH certificate format
+        serialNumber:
+          type: integer
+        principals:
+          type: array
+          items:
+            type: string
+        validAfter:
+          type: string
+          format: date-time
+        validBefore:
+          type: string
+          format: date-time
+        keyId:
+          type: string
+        certType:
+          type: string
+          enum: [user, host]
+        fingerprint:
+          type: string
+
+    CertificateListResponse:
+      type: object
+      properties:
+        certificates:
+          type: array
+          items:
+            $ref: '#/components/schemas/SSHCertificate'
+        total:
+          type: integer
+
+    AuthorizedKey:
+      type: object
+      properties:
+        id:
+          type: string
+        publicKey:
+          type: string
+        comment:
+          type: string
+        options:
+          type: string
+          description: authorized_keys options string
+        addedAt:
+          type: string
+          format: date-time
+
+    AuthorizedKeyCreate:
+      type: object
+      required: [publicKey]
+      properties:
+        publicKey:
+          type: string
+        comment:
+          type: string
+        options:
+          type: string
+
+    AuthorizedKeysResponse:
+      type: object
+      properties:
+        username:
+          type: string
+        keys:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthorizedKey'
+
+    KnownHost:
+      type: object
+      properties:
+        id:
+          type: string
+        hostname:
+          type: string
+        keyType:
+          type: string
+        publicKey:
+          type: string
+        fingerprint:
+          type: string
+        addedAt:
+          type: string
+          format: date-time
+
+    KnownHostCreate:
+      type: object
+      required: [hostname, publicKey]
+      properties:
+        hostname:
+          type: string
+        publicKey:
+          type: string
+        keyType:
+          type: string
+
+    KnownHostsResponse:
+      type: object
+      properties:
+        hosts:
+          type: array
+          items:
+            $ref: '#/components/schemas/KnownHost'
+        total:
+          type: integer
+
+    HostKeyResponse:
+      type: object
+      properties:
+        hostname:
+          type: string
+        keys:
+          type: array
+          items:
+            $ref: '#/components/schemas/KnownHost'
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string

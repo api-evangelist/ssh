@@ -1,0 +1,52 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "ssh": "https://www.openssh.com/vocab/",
+    "sec": "https://w3id.org/security#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+
+    "SSHKey": "sec:Key",
+    "SSHCertificate": "sec:Certificate",
+    "KnownHost": "ssh:KnownHost",
+    "AuthorizedKey": "ssh:AuthorizedKey",
+
+    "id": "schema:identifier",
+    "userId": {
+      "@id": "ssh:owner",
+      "@type": "@id"
+    },
+    "keyType": "sec:algorithm",
+    "publicKey": "sec:publicKeyPem",
+    "fingerprint": "sec:fingerprint",
+    "comment": "schema:description",
+    "createdAt": {
+      "@id": "schema:dateCreated",
+      "@type": "xsd:dateTime"
+    },
+    "lastUsedAt": {
+      "@id": "ssh:lastUsed",
+      "@type": "xsd:dateTime"
+    },
+
+    "certificate": "sec:certificate",
+    "serialNumber": "sec:serialNumber",
+    "principals": {
+      "@id": "ssh:authorizedPrincipals",
+      "@container": "@list"
+    },
+    "validAfter": {
+      "@id": "schema:validFrom",
+      "@type": "xsd:dateTime"
+    },
+    "validBefore": {
+      "@id": "schema:validThrough",
+      "@type": "xsd:dateTime"
+    },
+    "certType": "ssh:certificateType",
+
+    "hostname": "schema:name",
+    "username": "schema:identifier",
+    "options": "ssh:authorizedKeyOptions"
+  }
+}

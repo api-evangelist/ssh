@@ -1,0 +1,32 @@
+{
+  "example": "List SSH Keys",
+  "operation": "listKeys",
+  "request": {
+    "method": "GET",
+    "url": "https://api.openssh.example.com/v1/keys?userId=user-123&keyType=ed25519",
+    "headers": {
+      "Authorization": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...",
+      "Content-Type": "application/json"
+    }
+  },
+  "response": {
+    "status": 200,
+    "contentType": "application/json",
+    "body": {
+      "keys": [
+        {
+          "id": "key-abc123",
+          "userId": "user-123",
+          "keyType": "ed25519",
+          "publicKey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBm3b1TcFkBRm3GxJlZbqcZCj9ej7l6TdZHUfp5R1234 jane@workstation",
+          "fingerprint": "SHA256:HbKrAHtL9M3P2vX9zRqNmQKjVkWuCsOtEfHdYiJkLoM",
+          "comment": "jane@workstation",
+          "createdAt": "2026-03-01T10:00:00Z",
+          "lastUsedAt": "2026-05-01T08:30:00Z"
+        }
+      ],
+      "total": 1,
+      "page": 1
+    }
+  }
+}

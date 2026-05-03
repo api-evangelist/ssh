@@ -1,0 +1,56 @@
+{
+  "title": "SSH Key Management Structure",
+  "description": "Structure documentation for SSH key management entities",
+  "version": "1.0",
+  "structures": [
+    {
+      "name": "SSHKey",
+      "description": "A registered SSH public key",
+      "fields": [
+        { "name": "id", "type": "string", "required": true, "description": "Unique identifier" },
+        { "name": "userId", "type": "string", "required": false, "description": "Owner user ID" },
+        { "name": "keyType", "type": "enum(rsa|ed25519|ecdsa|dsa)", "required": true, "description": "Key algorithm" },
+        { "name": "publicKey", "type": "string", "required": true, "description": "OpenSSH format public key" },
+        { "name": "fingerprint", "type": "string", "required": true, "description": "SHA-256 key fingerprint" },
+        { "name": "comment", "type": "string", "required": false, "description": "Key comment" },
+        { "name": "createdAt", "type": "datetime", "required": true },
+        { "name": "lastUsedAt", "type": "datetime|null", "required": false }
+      ]
+    },
+    {
+      "name": "KeyPair",
+      "description": "Generated SSH key pair",
+      "fields": [
+        { "name": "publicKey", "type": "string", "required": true, "description": "Public key in OpenSSH format" },
+        { "name": "privateKey", "type": "string", "required": true, "description": "Private key (possibly encrypted)" },
+        { "name": "fingerprint", "type": "string", "required": true },
+        { "name": "keyType", "type": "string", "required": true }
+      ]
+    },
+    {
+      "name": "SSHCertificate",
+      "description": "A signed SSH certificate",
+      "fields": [
+        { "name": "certificate", "type": "string", "required": true, "description": "Signed certificate string" },
+        { "name": "serialNumber", "type": "integer", "required": false },
+        { "name": "principals", "type": "array<string>", "required": true, "description": "Authorized principals" },
+        { "name": "validAfter", "type": "datetime", "required": true, "description": "Certificate valid from" },
+        { "name": "validBefore", "type": "datetime", "required": true, "description": "Certificate expiry" },
+        { "name": "certType", "type": "enum(user|host)", "required": true },
+        { "name": "fingerprint", "type": "string", "required": false }
+      ]
+    },
+    {
+      "name": "KnownHost",
+      "description": "A known SSH host entry",
+      "fields": [
+        { "name": "id", "type": "string", "required": true },
+        { "name": "hostname", "type": "string", "required": true, "description": "Hostname or IP address" },
+        { "name": "keyType", "type": "string", "required": true },
+        { "name": "publicKey", "type": "string", "required": true },
+        { "name": "fingerprint", "type": "string", "required": true },
+        { "name": "addedAt", "type": "datetime", "required": true }
+      ]
+    }
+  ]
+}
