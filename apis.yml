@@ -69,7 +69,7 @@ common:
     url: https://www.openssh.com/
   - type: Documentation
     url: https://www.openssh.com/manual.html
-  - type: GitHub Organization
+  - type: GitHubOrganization
     url: https://github.com/openssh
   - type: OpenAPI
     url: >-
