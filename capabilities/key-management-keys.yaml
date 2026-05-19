@@ -1,0 +1,228 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: SSH Key Management API — Keys
+  description: 'SSH Key Management API — Keys. 5 operations. Lead operation: List SSH Keys. Self-contained Naftiko capability
+    covering one Ssh business surface.'
+  tags:
+  - Ssh
+  - Keys
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SSH_API_KEY: SSH_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: key-management-keys
+    baseUri: https://api.openssh.example.com/v1
+    description: SSH Key Management API — Keys business capability. Self-contained, no shared references.
+    resources:
+    - name: keys
+      path: /keys
+      operations:
+      - name: listkeys
+        method: GET
+        description: List SSH Keys
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: userId
+          in: query
+          type: string
+          description: Filter keys by user
+        - name: keyType
+          in: query
+          type: string
+        - name: page
+          in: query
+          type: integer
+        - name: limit
+          in: query
+          type: integer
+      - name: addkey
+        method: POST
+        description: Add SSH Key
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: keys-generate
+      path: /keys/generate
+      operations:
+      - name: generatekeypair
+        method: POST
+        description: Generate Key Pair
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: keys-keyId
+      path: /keys/{keyId}
+      operations:
+      - name: getkey
+        method: GET
+        description: Get SSH Key
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: deletekey
+        method: DELETE
+        description: Delete SSH Key
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.SSH_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: key-management-keys-rest
+    port: 8080
+    description: REST adapter for SSH Key Management API — Keys. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/keys
+      name: keys
+      description: REST surface for keys.
+      operations:
+      - method: GET
+        name: listkeys
+        description: List SSH Keys
+        call: key-management-keys.listkeys
+        with:
+          userId: rest.userId
+          keyType: rest.keyType
+          page: rest.page
+          limit: rest.limit
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: addkey
+        description: Add SSH Key
+        call: key-management-keys.addkey
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/keys/generate
+      name: keys-generate
+      description: REST surface for keys-generate.
+      operations:
+      - method: POST
+        name: generatekeypair
+        description: Generate Key Pair
+        call: key-management-keys.generatekeypair
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/keys/{keyid}
+      name: keys-keyid
+      description: REST surface for keys-keyId.
+      operations:
+      - method: GET
+        name: getkey
+        description: Get SSH Key
+        call: key-management-keys.getkey
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletekey
+        description: Delete SSH Key
+        call: key-management-keys.deletekey
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: key-management-keys-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for SSH Key Management API — Keys. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: list-ssh-keys
+      description: List SSH Keys
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: key-management-keys.listkeys
+      with:
+        userId: tools.userId
+        keyType: tools.keyType
+        page: tools.page
+        limit: tools.limit
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: add-ssh-key
+      description: Add SSH Key
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: key-management-keys.addkey
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: generate-key-pair
+      description: Generate Key Pair
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: key-management-keys.generatekeypair
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-ssh-key
+      description: Get SSH Key
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: key-management-keys.getkey
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-ssh-key
+      description: Delete SSH Key
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: key-management-keys.deletekey
+      outputParameters:
+      - type: object
+        mapping: $.

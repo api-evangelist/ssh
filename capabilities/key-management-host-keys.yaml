@@ -1,0 +1,79 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: SSH Key Management API — Host Keys
+  description: 'SSH Key Management API — Host Keys. 1 operations. Lead operation: Get Host Keys. Self-contained Naftiko capability
+    covering one Ssh business surface.'
+  tags:
+  - Ssh
+  - Host Keys
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SSH_API_KEY: SSH_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: key-management-host-keys
+    baseUri: https://api.openssh.example.com/v1
+    description: SSH Key Management API — Host Keys business capability. Self-contained, no shared references.
+    resources:
+    - name: host-keys-hostname
+      path: /host-keys/{hostname}
+      operations:
+      - name: gethostkeys
+        method: GET
+        description: Get Host Keys
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: hostname
+          in: path
+          type: string
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.SSH_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: key-management-host-keys-rest
+    port: 8080
+    description: REST adapter for SSH Key Management API — Host Keys. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/host-keys/{hostname}
+      name: host-keys-hostname
+      description: REST surface for host-keys-hostname.
+      operations:
+      - method: GET
+        name: gethostkeys
+        description: Get Host Keys
+        call: key-management-host-keys.gethostkeys
+        with:
+          hostname: rest.hostname
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: key-management-host-keys-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for SSH Key Management API — Host Keys. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: get-host-keys
+      description: Get Host Keys
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: key-management-host-keys.gethostkeys
+      with:
+        hostname: tools.hostname
+      outputParameters:
+      - type: object
+        mapping: $.
