@@ -1,0 +1,1556 @@
+{
+  "item": [
+    {
+      "id": "4f54a2f9-509c-4897-a4c9-5f1e758a4f1b",
+      "name": "Keys",
+      "description": {
+        "content": "SSH key pair management",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "4cc62df2-4ec7-4735-ad03-498674a077b3",
+          "name": "List SSH Keys",
+          "request": {
+            "name": "List SSH Keys",
+            "description": {
+              "content": "Returns a list of SSH public keys registered in the system, including metadata such as key type, fingerprint, and comment.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "keys"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "userId",
+                  "value": "<string>",
+                  "description": "Filter keys by user"
+                },
+                {
+                  "disabled": false,
+                  "key": "keyType",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "50"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4242e07e-c865-43b7-adfa-1961462039a2",
+              "name": "SSH key list",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "keys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "userId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "keyType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"keys\": [\n    {\n      \"id\": \"string\",\n      \"userId\": \"string\",\n      \"keyType\": \"rsa\",\n      \"publicKey\": \"string\",\n      \"fingerprint\": \"string\",\n      \"comment\": \"string\",\n      \"createdAt\": \"1974-02-25T03:59:53.141Z\",\n      \"lastUsedAt\": \"1975-11-04T09:08:57.069Z\"\n    },\n    {\n      \"id\": \"string\",\n      \"userId\": \"string\",\n      \"keyType\": \"ecdsa\",\n      \"publicKey\": \"string\",\n      \"fingerprint\": \"string\",\n      \"comment\": \"string\",\n      \"createdAt\": \"1977-02-15T08:03:07.978Z\",\n      \"lastUsedAt\": \"2005-06-15T20:21:02.848Z\"\n    }\n  ],\n  \"total\": 7987,\n  \"page\": 6676\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8347f0cb-bddc-44ea-883a-97426e71656b",
+              "name": "Authentication required",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "keys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "userId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "keyType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "02a27bb9-54a6-4933-89cf-b7f31a33c358",
+          "name": "Add SSH Key",
+          "request": {
+            "name": "Add SSH Key",
+            "description": {
+              "content": "Registers a new SSH public key in the system. The public key can then be added to authorized_keys or used for certificate signing.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "keys"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"publicKey\": \"<string>\",\n  \"comment\": \"<string>\",\n  \"userId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "62fb1af5-1790-473e-a579-57e834ba0d48",
+              "name": "Key registered",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "keys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"publicKey\": \"<string>\",\n  \"comment\": \"<string>\",\n  \"userId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"userId\": \"string\",\n  \"keyType\": \"ecdsa\",\n  \"publicKey\": \"string\",\n  \"fingerprint\": \"string\",\n  \"comment\": \"string\",\n  \"createdAt\": \"1987-04-05T02:34:06.789Z\",\n  \"lastUsedAt\": \"1980-05-02T05:03:46.158Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a560f836-66e0-4092-aadf-1ffd90334ac1",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "keys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"publicKey\": \"<string>\",\n  \"comment\": \"<string>\",\n  \"userId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b4b74820-cfa1-4244-aefa-11059d1c2a8c",
+          "name": "Generate Key Pair",
+          "request": {
+            "name": "Generate Key Pair",
+            "description": {
+              "content": "Generates a new SSH key pair (private + public) of the specified type. Returns the public key and an encrypted private key. Use ed25519 for new keys; RSA 4096-bit for legacy system compatibility.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "keys",
+                "generate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"keyType\": \"ed25519\",\n  \"bits\": \"<integer>\",\n  \"comment\": \"<string>\",\n  \"passphrase\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e8b649b2-1baa-407c-aa63-c9698a1df8b9",
+              "name": "Key pair generated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "keys",
+                    "generate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"keyType\": \"ed25519\",\n  \"bits\": \"<integer>\",\n  \"comment\": \"<string>\",\n  \"passphrase\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"publicKey\": \"string\",\n  \"privateKey\": \"string\",\n  \"fingerprint\": \"string\",\n  \"keyType\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b7d32b8d-c28e-416c-a67c-a844cbbf2923",
+          "name": "Get SSH Key",
+          "request": {
+            "name": "Get SSH Key",
+            "description": {
+              "content": "Returns details for a specific registered SSH key.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "keys",
+                ":keyId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "keyId",
+                  "description": "(Required) SSH key identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5f3f210a-94c2-41bd-bf08-a0a0cad1c9f1",
+              "name": "Key details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "keys",
+                    ":keyId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "keyId",
+                      "description": "(Required) SSH key identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"userId\": \"string\",\n  \"keyType\": \"ecdsa\",\n  \"publicKey\": \"string\",\n  \"fingerprint\": \"string\",\n  \"comment\": \"string\",\n  \"createdAt\": \"1987-04-05T02:34:06.789Z\",\n  \"lastUsedAt\": \"1980-05-02T05:03:46.158Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "20e62acf-2190-4835-b7ac-87bb4b70366b",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "keys",
+                    ":keyId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "keyId",
+                      "description": "(Required) SSH key identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f457893d-8f65-4b38-a768-7c4d18b64bc5",
+          "name": "Delete SSH Key",
+          "request": {
+            "name": "Delete SSH Key",
+            "description": {
+              "content": "Removes a registered SSH key from the system.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "keys",
+                ":keyId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "keyId",
+                  "description": "(Required) SSH key identifier"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "46fb63fd-bb25-4a7d-99a9-347bf738f818",
+              "name": "Key deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "keys",
+                    ":keyId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "keyId",
+                      "description": "(Required) SSH key identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "c6e65d66-f196-4494-b214-a150f127e7d7",
+      "name": "Certificates",
+      "description": {
+        "content": "SSH certificate authority and certificate signing",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b00c6167-f476-4c3d-b51c-a8e8f8cb25ad",
+          "name": "Sign SSH Certificate",
+          "request": {
+            "name": "Sign SSH Certificate",
+            "description": {
+              "content": "Signs an SSH public key with the certificate authority, creating a short-lived SSH certificate. Certificates enable time-limited access without managing authorized_keys files.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "certificates"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"publicKey\": \"<string>\",\n  \"principals\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"validityPeriod\": \"8h\",\n  \"certType\": \"user\",\n  \"extensions\": \"<object>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "53d8ae33-3adc-45dc-a77e-12a5bf3a606c",
+              "name": "Certificate signed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "certificates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"publicKey\": \"<string>\",\n  \"principals\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"validityPeriod\": \"8h\",\n  \"certType\": \"user\",\n  \"extensions\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"certificate\": \"string\",\n  \"serialNumber\": 16,\n  \"principals\": [\n    \"string\",\n    \"string\"\n  ],\n  \"validAfter\": \"2013-04-04T13:17:58.643Z\",\n  \"validBefore\": \"2013-01-14T11:48:36.483Z\",\n  \"keyId\": \"string\",\n  \"certType\": \"host\",\n  \"fingerprint\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8601f9d4-4839-4297-b9c7-1c104fa1e881",
+          "name": "List Certificates",
+          "request": {
+            "name": "List Certificates",
+            "description": {
+              "content": "Returns issued SSH certificates with their validity periods and principals.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "certificates"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "principal",
+                  "value": "<string>",
+                  "description": "Filter by principal (username)"
+                },
+                {
+                  "disabled": false,
+                  "key": "hostKey",
+                  "value": "<boolean>",
+                  "description": "Filter host certificates"
+                },
+                {
+                  "disabled": false,
+                  "key": "expired",
+                  "value": "false",
+                  "description": "Include expired certificates"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4566e5f9-5c93-40e2-9fe7-73fd30522114",
+              "name": "Certificate list",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "certificates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "principal",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "hostKey",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "expired",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"certificates\": [\n    {\n      \"certificate\": \"string\",\n      \"serialNumber\": 1719,\n      \"principals\": [\n        \"string\",\n        \"string\"\n      ],\n      \"validAfter\": \"1979-03-05T01:15:16.807Z\",\n      \"validBefore\": \"1996-11-16T03:23:27.090Z\",\n      \"keyId\": \"string\",\n      \"certType\": \"user\",\n      \"fingerprint\": \"string\"\n    },\n    {\n      \"certificate\": \"string\",\n      \"serialNumber\": 4755,\n      \"principals\": [\n        \"string\",\n        \"string\"\n      ],\n      \"validAfter\": \"2012-10-18T03:22:56.803Z\",\n      \"validBefore\": \"1979-06-02T14:08:34.855Z\",\n      \"keyId\": \"string\",\n      \"certType\": \"user\",\n      \"fingerprint\": \"string\"\n    }\n  ],\n  \"total\": 6876\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "9808cb3a-b6cd-42b8-b254-1d42080ac4c3",
+      "name": "Authorized Keys",
+      "description": {
+        "content": "Authorized keys management for users",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1d8547a3-f293-4473-82e0-585b51a221cb",
+          "name": "Get Authorized Keys",
+          "request": {
+            "name": "Get Authorized Keys",
+            "description": {
+              "content": "Returns the authorized keys configured for a specific user.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "authorized-keys",
+                ":username"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "username",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "19c41277-d6f5-4dce-8b63-9045f071d03c",
+              "name": "Authorized keys",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authorized-keys",
+                    ":username"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "username",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"username\": \"string\",\n  \"keys\": [\n    {\n      \"id\": \"string\",\n      \"publicKey\": \"string\",\n      \"comment\": \"string\",\n      \"options\": \"string\",\n      \"addedAt\": \"2003-07-30T01:34:45.555Z\"\n    },\n    {\n      \"id\": \"string\",\n      \"publicKey\": \"string\",\n      \"comment\": \"string\",\n      \"options\": \"string\",\n      \"addedAt\": \"2002-07-30T05:53:19.874Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "112b1daf-a237-43ca-96eb-0c8659426d09",
+          "name": "Add Authorized Key",
+          "request": {
+            "name": "Add Authorized Key",
+            "description": {
+              "content": "Adds a public key to a user's authorized_keys.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "authorized-keys",
+                ":username"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "username",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"publicKey\": \"<string>\",\n  \"comment\": \"<string>\",\n  \"options\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "79395830-e482-4b4d-b370-75710cdf2509",
+              "name": "Authorized key added",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authorized-keys",
+                    ":username"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "username",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"publicKey\": \"<string>\",\n  \"comment\": \"<string>\",\n  \"options\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"publicKey\": \"string\",\n  \"comment\": \"string\",\n  \"options\": \"string\",\n  \"addedAt\": \"2022-12-29T14:10:08.019Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c6b03114-204e-40fd-b344-379fa0a7548d",
+          "name": "Remove Authorized Key",
+          "request": {
+            "name": "Remove Authorized Key",
+            "description": {
+              "content": "Removes a key from a user's authorized_keys.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "authorized-keys",
+                ":username",
+                ":keyId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "username",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "keyId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2cca6aa9-412e-4720-8ac4-f5ad4fefe095",
+              "name": "Key removed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authorized-keys",
+                    ":username",
+                    ":keyId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "username",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "keyId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "1f72bab1-c671-4fc5-9a62-c6ba3a6a7f52",
+      "name": "Known Hosts",
+      "description": {
+        "content": "Known hosts verification and management",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6aaea766-681e-486b-a0cf-a9e8c3639de3",
+          "name": "List Known Hosts",
+          "request": {
+            "name": "List Known Hosts",
+            "description": {
+              "content": "Returns the list of known SSH hosts and their public keys.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "known-hosts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "hostname",
+                  "value": "<string>",
+                  "description": "Filter by hostname"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bc7cffb4-2eb5-4c9c-82fe-24810d06eaf7",
+              "name": "Known hosts list",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "known-hosts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "hostname",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"hosts\": [\n    {\n      \"id\": \"string\",\n      \"hostname\": \"string\",\n      \"keyType\": \"string\",\n      \"publicKey\": \"string\",\n      \"fingerprint\": \"string\",\n      \"addedAt\": \"1957-10-14T18:51:37.151Z\"\n    },\n    {\n      \"id\": \"string\",\n      \"hostname\": \"string\",\n      \"keyType\": \"string\",\n      \"publicKey\": \"string\",\n      \"fingerprint\": \"string\",\n      \"addedAt\": \"1995-03-13T15:04:33.499Z\"\n    }\n  ],\n  \"total\": 3444\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0e65a068-2d95-47ea-88da-bee7d1956f9f",
+          "name": "Add Known Host",
+          "request": {
+            "name": "Add Known Host",
+            "description": {
+              "content": "Adds a host and its public key to the known_hosts database.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "known-hosts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"hostname\": \"<string>\",\n  \"publicKey\": \"<string>\",\n  \"keyType\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "53580844-0161-45f9-82b1-899b4d9d143a",
+              "name": "Host added",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "known-hosts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"hostname\": \"<string>\",\n  \"publicKey\": \"<string>\",\n  \"keyType\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"hostname\": \"string\",\n  \"keyType\": \"string\",\n  \"publicKey\": \"string\",\n  \"fingerprint\": \"string\",\n  \"addedAt\": \"1997-03-07T18:06:15.580Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "b8625975-7bdc-4fa5-a6ba-57f0e7d3bcac",
+      "name": "Host Keys",
+      "description": {
+        "content": "SSH server host key management",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2f61a80d-ff93-4c3b-8531-10d57d793d3b",
+          "name": "Get Host Keys",
+          "request": {
+            "name": "Get Host Keys",
+            "description": {
+              "content": "Returns the SSH host keys for a specific server.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "host-keys",
+                ":hostname"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "hostname",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f0bd9d37-6b7f-4cf2-9974-22f1b20b20bf",
+              "name": "Host keys",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "host-keys",
+                    ":hostname"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "hostname",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"hostname\": \"string\",\n  \"keys\": [\n    {\n      \"id\": \"string\",\n      \"hostname\": \"string\",\n      \"keyType\": \"string\",\n      \"publicKey\": \"string\",\n      \"fingerprint\": \"string\",\n      \"addedAt\": \"1949-05-05T20:46:43.200Z\"\n    },\n    {\n      \"id\": \"string\",\n      \"hostname\": \"string\",\n      \"keyType\": \"string\",\n      \"publicKey\": \"string\",\n      \"fingerprint\": \"string\",\n      \"addedAt\": \"1954-03-03T18:02:34.060Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.openssh.example.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "e344cce4-68ea-484b-af97-d78b4705a4cc",
+    "name": "SSH Key Management API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "A REST API for managing SSH keys, certificates, and access policies in infrastructure environments. Provides endpoints for key generation, certificate signing, authorized keys management, and host key verification. This represents common SSH management capabilities available via OpenSSH tooling and SSH certificate authority implementations.\n\nContact Support:\n Name: OpenSSH Project",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,319 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "SSH Key Management API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Keys",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List SSH Keys",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openssh.example.com/v1/keys",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "query",
+                "description": "Filter keys by user"
+              },
+              {
+                "name": "keyType",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns a list of SSH public keys registered in the system, including metadata such as key type, fingerprint, and comment."
+        },
+        {
+          "info": {
+            "name": "Add SSH Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openssh.example.com/v1/keys",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Registers a new SSH public key in the system. The public key can then be added to authorized_keys or used for certificate signing."
+        },
+        {
+          "info": {
+            "name": "Generate Key Pair",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openssh.example.com/v1/keys/generate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generates a new SSH key pair (private + public) of the specified type. Returns the public key and an encrypted private key. Use ed25519 for new keys; RSA 4096-bit for legacy system compatibility."
+        },
+        {
+          "info": {
+            "name": "Get SSH Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openssh.example.com/v1/keys/:keyId",
+            "params": [
+              {
+                "name": "keyId",
+                "value": "",
+                "type": "path",
+                "description": "SSH key identifier"
+              }
+            ]
+          },
+          "docs": "Returns details for a specific registered SSH key."
+        },
+        {
+          "info": {
+            "name": "Delete SSH Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.openssh.example.com/v1/keys/:keyId",
+            "params": [
+              {
+                "name": "keyId",
+                "value": "",
+                "type": "path",
+                "description": "SSH key identifier"
+              }
+            ]
+          },
+          "docs": "Removes a registered SSH key from the system."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Certificates",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Certificates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openssh.example.com/v1/certificates",
+            "params": [
+              {
+                "name": "principal",
+                "value": "",
+                "type": "query",
+                "description": "Filter by principal (username)"
+              },
+              {
+                "name": "hostKey",
+                "value": "",
+                "type": "query",
+                "description": "Filter host certificates"
+              },
+              {
+                "name": "expired",
+                "value": "",
+                "type": "query",
+                "description": "Include expired certificates"
+              }
+            ]
+          },
+          "docs": "Returns issued SSH certificates with their validity periods and principals."
+        },
+        {
+          "info": {
+            "name": "Sign SSH Certificate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openssh.example.com/v1/certificates",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Signs an SSH public key with the certificate authority, creating a short-lived SSH certificate. Certificates enable time-limited access without managing authorized_keys files."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Authorized Keys",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Authorized Keys",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openssh.example.com/v1/authorized-keys/:username",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns the authorized keys configured for a specific user."
+        },
+        {
+          "info": {
+            "name": "Add Authorized Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openssh.example.com/v1/authorized-keys/:username",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds a public key to a user's authorized_keys."
+        },
+        {
+          "info": {
+            "name": "Remove Authorized Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.openssh.example.com/v1/authorized-keys/:username/:keyId",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "keyId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Removes a key from a user's authorized_keys."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Known Hosts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Known Hosts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openssh.example.com/v1/known-hosts",
+            "params": [
+              {
+                "name": "hostname",
+                "value": "",
+                "type": "query",
+                "description": "Filter by hostname"
+              }
+            ]
+          },
+          "docs": "Returns the list of known SSH hosts and their public keys."
+        },
+        {
+          "info": {
+            "name": "Add Known Host",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openssh.example.com/v1/known-hosts",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds a host and its public key to the known_hosts database."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Host Keys",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Host Keys",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openssh.example.com/v1/host-keys/:hostname",
+            "params": [
+              {
+                "name": "hostname",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns the SSH host keys for a specific server."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,82 +1,85 @@
-# SSH
+# SSH (ssh)
 
-SSH (Secure Shell) is a cryptographic network protocol for secure remote login, command execution, and file transfer between computers over unsecured networks. It provides strong encryption, authentication, and data integrity, replacing insecure protocols like Telnet and rlogin. SSH is a fundamental tool for system administration, DevOps, and secure infrastructure access.
+SSH (Secure Shell) is a cryptographic network protocol for secure remote login, command execution, and file transfer between computers over unsecured networks. It provides strong encryption, authentication, and data integrity, replacing insecure protocols like Telnet and rlogin. SSH is a fundamental tool for system administration, DevOps, and secure infrastructure access. Multiple vendors provide SSH client libraries, server implementations, and management APIs.
 
-- **Website:** https://www.openssh.com/
-- **Documentation:** https://www.openssh.com/manual.html
-- **GitHub:** https://github.com/openssh
+**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/ssh/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/ssh/refs/heads/main/apis.yml)
+
+## Scope
+
+- **Type:** Index
+
+## Tags
+
+- SSH
+- Secure Shell
+- Remote Access
+- Cryptography
+- Network Security
+- System Administration
+
+## Timestamps
+
+- **Created:** 2025-01-01
+- **Modified:** 2026-05-19
 
 ## APIs
 
 ### OpenSSH Key Management API
 
-Programmatic interface for SSH key management, certificate signing, authorized keys administration, and known hosts management. Enables infrastructure teams to manage SSH access at scale using certificate-based authentication.
+OpenSSH is the premier open-source SSH implementation. While SSH itself is a protocol, OpenSSH provides programmatic interfaces for key management, authorized_keys configuration, known_hosts management, and integration with PAM and certificate authorities. SSH certificate authorities enable large-scale key management via short-lived certificates.
 
-- **Base URL:** https://api.openssh.example.com/v1
-- **Documentation:** https://www.openssh.com/manual.html
-- **OpenAPI:** [ssh-key-management-openapi.yml](openapi/ssh-key-management-openapi.yml)
+- **Human URL:** [https://www.openssh.com/](https://www.openssh.com/)
+- **Base URL:** `https://api.openssh.example.com/v1`
+
+#### Tags
+
+- SSH
+- OpenSSH
+- Key Management
+- Certificate Authority
+- Authentication
+
+#### Properties
+
+- [Documentation](https://www.openssh.com/manual.html)
+- [OpenAPI](https://raw.githubusercontent.com/api-evangelist/ssh/refs/heads/main/openapi/ssh-key-management-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Postman Collection](collections/ssh-key-management.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/ssh-key-management.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
 ### Teleport Access Management API
 
-Teleport is a modern SSH infrastructure access platform providing certificate-based authentication, session recording, audit logging, and role-based access control.
+Teleport is a modern SSH infrastructure access platform providing certificate-based authentication, session recording, audit logging, and role-based access control for SSH, Kubernetes, databases, and web applications. Teleport's API enables programmatic management of users, roles, certificates, and access policies.
 
-- **Documentation:** https://goteleport.com/docs/
+- **Human URL:** [https://goteleport.com/](https://goteleport.com/)
+- **Base URL:** `https://teleport.example.com/v1`
 
-## Artifacts
+#### Tags
 
-### OpenAPI Specifications
+- SSH
+- Access Management
+- Certificate Authority
+- Zero Trust
+- Privileged Access
 
-| Spec | Description |
-|------|-------------|
-| [ssh-key-management-openapi.yml](openapi/ssh-key-management-openapi.yml) | SSH key management and certificate authority API |
+#### Properties
 
-### Spectral Rules
+- [Documentation](https://goteleport.com/docs/)
+- [Postman Collection](collections/ssh-key-management.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/ssh-key-management.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
-| Ruleset | Description |
-|---------|-------------|
-| [ssh-rules.yml](rules/ssh-rules.yml) | Spectral rules for SSH management API conventions |
+## Common Properties
 
-### Capabilities
+- [Website](https://www.openssh.com/)
+- [Documentation](https://www.openssh.com/manual.html)
+- [GitHub Organization](https://github.com/openssh)
+- [OpenAPI](https://raw.githubusercontent.com/api-evangelist/ssh/refs/heads/main/openapi/ssh-key-management-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [JSON Schema](https://raw.githubusercontent.com/api-evangelist/ssh/refs/heads/main/json-schema/ssh-key-schema.json) — [JSON Schema](https://json-schema.org/specification)
+- [JSON Structure](https://raw.githubusercontent.com/api-evangelist/ssh/refs/heads/main/json-structure/ssh-key-structure.json)
+- [J S O N L D Context](https://raw.githubusercontent.com/api-evangelist/ssh/refs/heads/main/json-ld/ssh-context.jsonld)
+- [Spectral Rules](https://raw.githubusercontent.com/api-evangelist/ssh/refs/heads/main/rules/ssh-rules.yml)
+- [Vocabulary](https://raw.githubusercontent.com/api-evangelist/ssh/refs/heads/main/vocabulary/ssh-vocabulary.yml)
 
-#### Workflow Capabilities
+## Maintainers
 
-| Capability | Description |
-|-----------|-------------|
-| [key-management.yaml](capabilities/key-management.yaml) | Unified SSH key lifecycle and certificate management workflow |
-
-#### Shared Definitions
-
-| Shared | Description |
-|--------|-------------|
-| [key-management.yaml](capabilities/shared/key-management.yaml) | SSH Key Management API consumer definition |
-
-### JSON Schema
-
-| Schema | Description |
-|--------|-------------|
-| [ssh-key-schema.json](json-schema/ssh-key-schema.json) | SSH key and certificate entity schema |
-
-### JSON Structure
-
-| Structure | Description |
-|-----------|-------------|
-| [ssh-key-structure.json](json-structure/ssh-key-structure.json) | SSH key management structure documentation |
-
-### JSON-LD
-
-| Context | Description |
-|---------|-------------|
-| [ssh-context.jsonld](json-ld/ssh-context.jsonld) | JSON-LD context for SSH security vocabulary |
-
-### Examples
-
-| Example | Description |
-|---------|-------------|
-| [ssh-list-keys-example.json](examples/ssh-list-keys-example.json) | List registered SSH keys example |
-| [ssh-sign-certificate-example.json](examples/ssh-sign-certificate-example.json) | Sign SSH certificate with CA example |
-
-### Vocabulary
-
-| Vocabulary | Description |
-|-----------|-------------|
-| [ssh-vocabulary.yml](vocabulary/ssh-vocabulary.yml) | SSH protocol vocabulary and terminology |
+**FN:** Kin Lane
+**Email:** kin@apievangelist.com
