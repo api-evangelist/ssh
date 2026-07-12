@@ -58,6 +58,10 @@ apis:
       - type: Documentation
         url: https://goteleport.com/docs/
 common:
+  - type: DomainSecurity
+    url: security/ssh-domain-security.yml
+  - type: Authentication
+    url: authentication/ssh-authentication.yml
   - type: Website
     url: https://www.openssh.com/
   - type: Documentation
@@ -76,6 +80,8 @@ common:
     url: https://raw.githubusercontent.com/api-evangelist/ssh/refs/heads/main/rules/ssh-rules.yml
   - type: Vocabulary
     url: https://raw.githubusercontent.com/api-evangelist/ssh/refs/heads/main/vocabulary/ssh-vocabulary.yml
+  - url: https://ssh.com/blog/rss.xml
+    type: Blog
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
