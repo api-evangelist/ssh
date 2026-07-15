@@ -58,6 +58,8 @@ apis:
       - type: Documentation
         url: https://goteleport.com/docs/
 common:
+  - type: AgenticAccess
+    url: agentic-access/ssh-agentic-access.yml
   - type: DomainSecurity
     url: security/ssh-domain-security.yml
   - type: Authentication
