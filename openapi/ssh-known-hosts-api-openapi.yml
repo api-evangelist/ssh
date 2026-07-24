@@ -1,0 +1,103 @@
+openapi: 3.1.0
+info:
+  title: SSH Key Management Authorized Keys Known Hosts API
+  description: A REST API for managing SSH keys, certificates, and access policies in infrastructure environments. Provides endpoints for key generation, certificate signing, authorized keys management, and host key verification. This represents common SSH management capabilities available via OpenSSH tooling and SSH certificate authority implementations.
+  version: '1.0'
+  contact:
+    name: OpenSSH Project
+    url: https://www.openssh.com/
+  license:
+    name: BSD License
+    url: https://www.openssh.com/portable.html
+servers:
+- url: https://api.openssh.example.com/v1
+  description: SSH Management API
+security:
+- BearerAuth: []
+tags:
+- name: Known Hosts
+  description: Known hosts verification and management
+paths:
+  /known-hosts:
+    get:
+      operationId: listKnownHosts
+      summary: List Known Hosts
+      description: Returns the list of known SSH hosts and their public keys.
+      tags:
+      - Known Hosts
+      parameters:
+      - name: hostname
+        in: query
+        description: Filter by hostname
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Known hosts list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KnownHostsResponse'
+    post:
+      operationId: addKnownHost
+      summary: Add Known Host
+      description: Adds a host and its public key to the known_hosts database.
+      tags:
+      - Known Hosts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KnownHostCreate'
+      responses:
+        '201':
+          description: Host added
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KnownHost'
+components:
+  schemas:
+    KnownHostsResponse:
+      type: object
+      properties:
+        hosts:
+          type: array
+          items:
+            $ref: '#/components/schemas/KnownHost'
+        total:
+          type: integer
+    KnownHostCreate:
+      type: object
+      required:
+      - hostname
+      - publicKey
+      properties:
+        hostname:
+          type: string
+        publicKey:
+          type: string
+        keyType:
+          type: string
+    KnownHost:
+      type: object
+      properties:
+        id:
+          type: string
+        hostname:
+          type: string
+        keyType:
+          type: string
+        publicKey:
+          type: string
+        fingerprint:
+          type: string
+        addedAt:
+          type: string
+          format: date-time
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

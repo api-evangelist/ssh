@@ -1,0 +1,262 @@
+openapi: 3.1.0
+info:
+  title: SSH Key Management Authorized Keys API
+  description: A REST API for managing SSH keys, certificates, and access policies in infrastructure environments. Provides endpoints for key generation, certificate signing, authorized keys management, and host key verification. This represents common SSH management capabilities available via OpenSSH tooling and SSH certificate authority implementations.
+  version: '1.0'
+  contact:
+    name: OpenSSH Project
+    url: https://www.openssh.com/
+  license:
+    name: BSD License
+    url: https://www.openssh.com/portable.html
+servers:
+- url: https://api.openssh.example.com/v1
+  description: SSH Management API
+security:
+- BearerAuth: []
+tags:
+- name: Keys
+  description: SSH key pair management
+paths:
+  /keys:
+    get:
+      operationId: listKeys
+      summary: List SSH Keys
+      description: Returns a list of SSH public keys registered in the system, including metadata such as key type, fingerprint, and comment.
+      tags:
+      - Keys
+      parameters:
+      - name: userId
+        in: query
+        description: Filter keys by user
+        schema:
+          type: string
+      - name: keyType
+        in: query
+        schema:
+          type: string
+          enum:
+          - rsa
+          - ed25519
+          - ecdsa
+          - dsa
+      - name: page
+        in: query
+        schema:
+          type: integer
+          default: 1
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          default: 50
+      responses:
+        '200':
+          description: SSH key list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KeyListResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: addKey
+      summary: Add SSH Key
+      description: Registers a new SSH public key in the system. The public key can then be added to authorized_keys or used for certificate signing.
+      tags:
+      - Keys
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KeyCreate'
+      responses:
+        '201':
+          description: Key registered
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SSHKey'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /keys/generate:
+    post:
+      operationId: generateKeyPair
+      summary: Generate Key Pair
+      description: Generates a new SSH key pair (private + public) of the specified type. Returns the public key and an encrypted private key. Use ed25519 for new keys; RSA 4096-bit for legacy system compatibility.
+      tags:
+      - Keys
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KeyGenerateRequest'
+      responses:
+        '201':
+          description: Key pair generated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KeyPair'
+  /keys/{keyId}:
+    get:
+      operationId: getKey
+      summary: Get SSH Key
+      description: Returns details for a specific registered SSH key.
+      tags:
+      - Keys
+      parameters:
+      - $ref: '#/components/parameters/KeyId'
+      responses:
+        '200':
+          description: Key details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SSHKey'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteKey
+      summary: Delete SSH Key
+      description: Removes a registered SSH key from the system.
+      tags:
+      - Keys
+      parameters:
+      - $ref: '#/components/parameters/KeyId'
+      responses:
+        '204':
+          description: Key deleted
+components:
+  schemas:
+    KeyListResponse:
+      type: object
+      properties:
+        keys:
+          type: array
+          items:
+            $ref: '#/components/schemas/SSHKey'
+        total:
+          type: integer
+        page:
+          type: integer
+    KeyCreate:
+      type: object
+      required:
+      - publicKey
+      properties:
+        publicKey:
+          type: string
+          description: SSH public key in OpenSSH format
+        comment:
+          type: string
+        userId:
+          type: string
+    KeyGenerateRequest:
+      type: object
+      properties:
+        keyType:
+          type: string
+          enum:
+          - rsa
+          - ed25519
+          - ecdsa
+          default: ed25519
+        bits:
+          type: integer
+          description: Key size in bits (for RSA only)
+          enum:
+          - 2048
+          - 3072
+          - 4096
+        comment:
+          type: string
+        passphrase:
+          type: string
+          description: Optional passphrase to encrypt the private key
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+    KeyPair:
+      type: object
+      properties:
+        publicKey:
+          type: string
+          description: Public key in OpenSSH format
+        privateKey:
+          type: string
+          description: Private key (PEM or OpenSSH format, possibly encrypted)
+        fingerprint:
+          type: string
+        keyType:
+          type: string
+    SSHKey:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique key identifier
+        userId:
+          type: string
+          description: Owner user ID
+        keyType:
+          type: string
+          enum:
+          - rsa
+          - ed25519
+          - ecdsa
+          - dsa
+        publicKey:
+          type: string
+          description: Public key in OpenSSH format
+        fingerprint:
+          type: string
+          description: SHA-256 fingerprint of the key
+        comment:
+          type: string
+          description: Key comment (typically user@host)
+        createdAt:
+          type: string
+          format: date-time
+        lastUsedAt:
+          type: string
+          format: date-time
+          nullable: true
+  responses:
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    BadRequest:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  parameters:
+    KeyId:
+      name: keyId
+      in: path
+      required: true
+      description: SSH key identifier
+      schema:
+        type: string
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
