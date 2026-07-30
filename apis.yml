@@ -7,7 +7,20 @@ description: >-
   secure infrastructure access. Multiple vendors provide SSH client libraries, server implementations, and management
   APIs.
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/ssh.png
 tags:
   - SSH
   - Secure Shell
@@ -20,43 +33,84 @@ created: '2025-01-01'
 modified: '2026-05-19'
 specificationVersion: '0.19'
 apis:
-  - aid: ssh:openssh-management
-    name: OpenSSH Key Management API
-    description: >-
-      OpenSSH is the premier open-source SSH implementation. While SSH itself is a protocol, OpenSSH provides
-      programmatic interfaces for key management, authorized_keys configuration, known_hosts management, and integration
-      with PAM and certificate authorities. SSH certificate authorities enable large-scale key management via
-      short-lived certificates.
-    humanURL: https://www.openssh.com/
-    baseURL: https://api.openssh.example.com/v1
-    tags:
-      - SSH
-      - OpenSSH
-      - Key Management
-      - Certificate Authority
-      - Authentication
-    properties:
-      - type: Documentation
-        url: https://www.openssh.com/manual.html
-      - type: OpenAPI
-        url: https://raw.githubusercontent.com/api-evangelist/ssh/refs/heads/main/openapi/ssh-key-management-openapi.yml
-  - aid: ssh:teleport-api
-    name: Teleport Access Management API
-    description: >-
-      Teleport is a modern SSH infrastructure access platform providing certificate-based authentication, session
-      recording, audit logging, and role-based access control for SSH, Kubernetes, databases, and web applications.
-      Teleport's API enables programmatic management of users, roles, certificates, and access policies.
-    humanURL: https://goteleport.com/
-    baseURL: https://teleport.example.com/v1
-    tags:
-      - SSH
-      - Access Management
-      - Certificate Authority
-      - Zero Trust
-      - Privileged Access
-    properties:
-      - type: Documentation
-        url: https://goteleport.com/docs/
+- aid: ssh:teleport-api
+  name: Teleport Access Management API
+  description: >-
+    Teleport is a modern SSH infrastructure access platform providing certificate-based authentication,
+    session recording, audit logging, and role-based access control for SSH, Kubernetes, databases, and
+    web applications. Teleport's API enables programmatic management of users, roles, certificates, and
+    access policies.
+  humanURL: https://goteleport.com/
+  baseURL: https://teleport.example.com/v1
+  tags:
+  - SSH
+  - Access Management
+  - Certificate Authority
+  - Zero Trust
+  - Privileged Access
+  properties:
+  - type: Documentation
+    url: https://goteleport.com/docs/
+- aid: ssh:ssh-authorized-keys-api
+  name: SSH Authorized Keys API
+  description: Authorized keys management for users
+  humanURL: https://www.openssh.com/
+  baseURL: https://api.openssh.example.com/v1
+  tags:
+  - Authorized Keys
+  properties:
+  - type: OpenAPI
+    url: openapi/ssh-authorized-keys-api-openapi.yml
+  - type: Documentation
+    url: https://www.openssh.com/manual.html
+- aid: ssh:ssh-certificates-api
+  name: SSH Certificates API
+  description: SSH certificate authority and certificate signing
+  humanURL: https://www.openssh.com/
+  baseURL: https://api.openssh.example.com/v1
+  tags:
+  - Certificates
+  properties:
+  - type: OpenAPI
+    url: openapi/ssh-certificates-api-openapi.yml
+  - type: Documentation
+    url: https://www.openssh.com/manual.html
+- aid: ssh:ssh-host-keys-api
+  name: SSH Host Keys API
+  description: SSH server host key management
+  humanURL: https://www.openssh.com/
+  baseURL: https://api.openssh.example.com/v1
+  tags:
+  - Host Keys
+  properties:
+  - type: OpenAPI
+    url: openapi/ssh-host-keys-api-openapi.yml
+  - type: Documentation
+    url: https://www.openssh.com/manual.html
+- aid: ssh:ssh-keys-api
+  name: SSH Keys API
+  description: SSH key pair management
+  humanURL: https://www.openssh.com/
+  baseURL: https://api.openssh.example.com/v1
+  tags:
+  - Keys
+  properties:
+  - type: OpenAPI
+    url: openapi/ssh-keys-api-openapi.yml
+  - type: Documentation
+    url: https://www.openssh.com/manual.html
+- aid: ssh:ssh-known-hosts-api
+  name: SSH Known Hosts API
+  description: Known hosts verification and management
+  humanURL: https://www.openssh.com/
+  baseURL: https://api.openssh.example.com/v1
+  tags:
+  - Known Hosts
+  properties:
+  - type: OpenAPI
+    url: openapi/ssh-known-hosts-api-openapi.yml
+  - type: Documentation
+    url: https://www.openssh.com/manual.html
 common:
   - type: AgenticAccess
     url: agentic-access/ssh-agentic-access.yml
