@@ -1,0 +1,22 @@
+{
+  "provider": "ssh",
+  "sources": [
+    "ssh-authorized-keys-api-openapi.yml",
+    "ssh-certificates-api-openapi.yml",
+    "ssh-host-keys-api-openapi.yml",
+    "ssh-keys-api-openapi.yml",
+    "ssh-known-hosts-api-openapi.yml"
+  ],
+  "outputs": [
+    "ssh-authorized-keys-api-openapi.yml",
+    "ssh-certificates-api-openapi.yml",
+    "ssh-host-keys-api-openapi.yml",
+    "ssh-keys-api-openapi.yml",
+    "ssh-known-hosts-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
