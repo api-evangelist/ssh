@@ -1,0 +1,230 @@
+{
+  "item": [
+    {
+      "id": "d15db686-8031-49ae-912d-a54e04d9b8b7",
+      "name": "Known Hosts",
+      "description": {
+        "content": "Known hosts verification and management",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8d7daf99-8730-4e7f-8735-85b1c8cb347c",
+          "name": "List Known Hosts",
+          "request": {
+            "name": "List Known Hosts",
+            "description": {
+              "content": "Returns the list of known SSH hosts and their public keys.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "known-hosts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "hostname",
+                  "value": "<string>",
+                  "description": "Filter by hostname"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "881aede3-999d-482b-b969-8d95ad4eaa56",
+              "name": "Known hosts list",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "known-hosts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "hostname",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"hosts\": [\n    {\n      \"id\": \"string\",\n      \"hostname\": \"string\",\n      \"keyType\": \"string\",\n      \"publicKey\": \"string\",\n      \"fingerprint\": \"string\",\n      \"addedAt\": \"1990-07-29T12:33:25.908Z\"\n    },\n    {\n      \"id\": \"string\",\n      \"hostname\": \"string\",\n      \"keyType\": \"string\",\n      \"publicKey\": \"string\",\n      \"fingerprint\": \"string\",\n      \"addedAt\": \"1962-04-05T21:57:39.527Z\"\n    }\n  ],\n  \"total\": 9246\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3a68ec17-8b0a-433a-9ab2-fd2c7662925b",
+          "name": "Add Known Host",
+          "request": {
+            "name": "Add Known Host",
+            "description": {
+              "content": "Adds a host and its public key to the known_hosts database.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "known-hosts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"hostname\": \"<string>\",\n  \"publicKey\": \"<string>\",\n  \"keyType\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c45c2a46-3cff-4d88-b9e3-89e3e3a15489",
+              "name": "Host added",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "known-hosts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"hostname\": \"<string>\",\n  \"publicKey\": \"<string>\",\n  \"keyType\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"hostname\": \"string\",\n  \"keyType\": \"string\",\n  \"publicKey\": \"string\",\n  \"fingerprint\": \"string\",\n  \"addedAt\": \"2023-03-08T11:17:42.109Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.openssh.example.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "79fb056d-701a-48ef-8a08-6286958362da",
+    "name": "SSH Key Management Authorized Keys Known Hosts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "A REST API for managing SSH keys, certificates, and access policies in infrastructure environments. Provides endpoints for key generation, certificate signing, authorized keys management, and host key verification. This represents common SSH management capabilities available via OpenSSH tooling and SSH certificate authority implementations.\n\nContact Support:\n Name: OpenSSH Project",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "SSH Key Management Authorized Keys Known Hosts API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Known Hosts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Known Hosts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openssh.example.com/v1/known-hosts",
+            "params": [
+              {
+                "name": "hostname",
+                "value": "",
+                "type": "query",
+                "description": "Filter by hostname"
+              }
+            ]
+          },
+          "docs": "Returns the list of known SSH hosts and their public keys."
+        },
+        {
+          "info": {
+            "name": "Add Known Host",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openssh.example.com/v1/known-hosts",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds a host and its public key to the known_hosts database."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

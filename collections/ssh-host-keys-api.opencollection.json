@@ -1,0 +1,42 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "SSH Key Management Authorized Keys Host Keys API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Host Keys",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Host Keys",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openssh.example.com/v1/host-keys/:hostname",
+            "params": [
+              {
+                "name": "hostname",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns the SSH host keys for a specific server."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

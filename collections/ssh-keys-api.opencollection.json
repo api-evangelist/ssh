@@ -1,0 +1,126 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "SSH Key Management Authorized Keys API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Keys",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List SSH Keys",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openssh.example.com/v1/keys",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "query",
+                "description": "Filter keys by user"
+              },
+              {
+                "name": "keyType",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns a list of SSH public keys registered in the system, including metadata such as key type, fingerprint, and comment."
+        },
+        {
+          "info": {
+            "name": "Add SSH Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openssh.example.com/v1/keys",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Registers a new SSH public key in the system. The public key can then be added to authorized_keys or used for certificate signing."
+        },
+        {
+          "info": {
+            "name": "Generate Key Pair",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openssh.example.com/v1/keys/generate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generates a new SSH key pair (private + public) of the specified type. Returns the public key and an encrypted private key. Use ed25519 for new keys; RSA 4096-bit for legacy system compatibility."
+        },
+        {
+          "info": {
+            "name": "Get SSH Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openssh.example.com/v1/keys/:keyId",
+            "params": [
+              {
+                "name": "keyId",
+                "value": "",
+                "type": "path",
+                "description": "SSH key identifier"
+              }
+            ]
+          },
+          "docs": "Returns details for a specific registered SSH key."
+        },
+        {
+          "info": {
+            "name": "Delete SSH Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.openssh.example.com/v1/keys/:keyId",
+            "params": [
+              {
+                "name": "keyId",
+                "value": "",
+                "type": "path",
+                "description": "SSH key identifier"
+              }
+            ]
+          },
+          "docs": "Removes a registered SSH key from the system."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

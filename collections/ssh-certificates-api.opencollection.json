@@ -1,0 +1,70 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "SSH Key Management Authorized Keys Certificates API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Certificates",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Certificates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openssh.example.com/v1/certificates",
+            "params": [
+              {
+                "name": "principal",
+                "value": "",
+                "type": "query",
+                "description": "Filter by principal (username)"
+              },
+              {
+                "name": "hostKey",
+                "value": "",
+                "type": "query",
+                "description": "Filter host certificates"
+              },
+              {
+                "name": "expired",
+                "value": "",
+                "type": "query",
+                "description": "Include expired certificates"
+              }
+            ]
+          },
+          "docs": "Returns issued SSH certificates with their validity periods and principals."
+        },
+        {
+          "info": {
+            "name": "Sign SSH Certificate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openssh.example.com/v1/certificates",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Signs an SSH public key with the certificate authority, creating a short-lived SSH certificate. Certificates enable time-limited access without managing authorized_keys files."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

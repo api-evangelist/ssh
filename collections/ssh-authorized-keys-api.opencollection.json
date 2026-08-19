@@ -1,0 +1,87 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "SSH Key Management Authorized Keys API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Authorized Keys",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Authorized Keys",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openssh.example.com/v1/authorized-keys/:username",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns the authorized keys configured for a specific user."
+        },
+        {
+          "info": {
+            "name": "Add Authorized Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openssh.example.com/v1/authorized-keys/:username",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds a public key to a user's authorized_keys."
+        },
+        {
+          "info": {
+            "name": "Remove Authorized Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.openssh.example.com/v1/authorized-keys/:username/:keyId",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "keyId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Removes a key from a user's authorized_keys."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
