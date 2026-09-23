@@ -1,11 +1,7 @@
 {
   "provider": "ssh",
   "sources": [
-    "ssh-authorized-keys-api-openapi.yml",
-    "ssh-certificates-api-openapi.yml",
-    "ssh-host-keys-api-openapi.yml",
-    "ssh-keys-api-openapi.yml",
-    "ssh-known-hosts-api-openapi.yml"
+    "_original/ssh-key-management-openapi.yml"
   ],
   "outputs": [
     "ssh-authorized-keys-api-openapi.yml",
@@ -17,6 +13,16 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "ssh-key-management-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "ssh-authorized-keys-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ssh-certificates-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ssh-host-keys-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ssh-keys-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ssh-known-hosts-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
