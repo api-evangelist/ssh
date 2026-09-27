@@ -70,6 +70,15 @@ paths:
                 $ref: '#/components/schemas/CertificateListResponse'
 components:
   schemas:
+    CertificateListResponse:
+      type: object
+      properties:
+        certificates:
+          type: array
+          items:
+            $ref: '#/components/schemas/SSHCertificate'
+        total:
+          type: integer
     CertificateSignRequest:
       type: object
       required:
@@ -124,15 +133,6 @@ components:
           - host
         fingerprint:
           type: string
-    CertificateListResponse:
-      type: object
-      properties:
-        certificates:
-          type: array
-          items:
-            $ref: '#/components/schemas/SSHCertificate'
-        total:
-          type: integer
   securitySchemes:
     BearerAuth:
       type: http

@@ -130,25 +130,6 @@ paths:
         '204':
           description: Key deleted
 components:
-  responses:
-    BadRequest:
-      description: Invalid request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    Unauthorized:
-      description: Authentication required
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
   parameters:
     KeyId:
       name: keyId
@@ -158,6 +139,51 @@ components:
       schema:
         type: string
   schemas:
+    KeyGenerateRequest:
+      type: object
+      properties:
+        keyType:
+          type: string
+          enum:
+          - rsa
+          - ed25519
+          - ecdsa
+          default: ed25519
+        bits:
+          type: integer
+          description: Key size in bits (for RSA only)
+          enum:
+          - 2048
+          - 3072
+          - 4096
+        comment:
+          type: string
+        passphrase:
+          type: string
+          description: Optional passphrase to encrypt the private key
+    KeyCreate:
+      type: object
+      required:
+      - publicKey
+      properties:
+        publicKey:
+          type: string
+          description: SSH public key in OpenSSH format
+        comment:
+          type: string
+        userId:
+          type: string
+    KeyListResponse:
+      type: object
+      properties:
+        keys:
+          type: array
+          items:
+            $ref: '#/components/schemas/SSHKey'
+        total:
+          type: integer
+        page:
+          type: integer
     KeyPair:
       type: object
       properties:
@@ -203,29 +229,6 @@ components:
           type: string
           format: date-time
           nullable: true
-    KeyListResponse:
-      type: object
-      properties:
-        keys:
-          type: array
-          items:
-            $ref: '#/components/schemas/SSHKey'
-        total:
-          type: integer
-        page:
-          type: integer
-    KeyCreate:
-      type: object
-      required:
-      - publicKey
-      properties:
-        publicKey:
-          type: string
-          description: SSH public key in OpenSSH format
-        comment:
-          type: string
-        userId:
-          type: string
     ErrorResponse:
       type: object
       properties:
@@ -233,28 +236,25 @@ components:
           type: string
         message:
           type: string
-    KeyGenerateRequest:
-      type: object
-      properties:
-        keyType:
-          type: string
-          enum:
-          - rsa
-          - ed25519
-          - ecdsa
-          default: ed25519
-        bits:
-          type: integer
-          description: Key size in bits (for RSA only)
-          enum:
-          - 2048
-          - 3072
-          - 4096
-        comment:
-          type: string
-        passphrase:
-          type: string
-          description: Optional passphrase to encrypt the private key
+  responses:
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    BadRequest:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   securitySchemes:
     BearerAuth:
       type: http

@@ -86,6 +86,15 @@ paths:
           description: Key removed
 components:
   schemas:
+    AuthorizedKeysResponse:
+      type: object
+      properties:
+        username:
+          type: string
+        keys:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthorizedKey'
     AuthorizedKey:
       type: object
       properties:
@@ -101,15 +110,6 @@ components:
         addedAt:
           type: string
           format: date-time
-    AuthorizedKeysResponse:
-      type: object
-      properties:
-        username:
-          type: string
-        keys:
-          type: array
-          items:
-            $ref: '#/components/schemas/AuthorizedKey'
     AuthorizedKeyCreate:
       type: object
       required:
