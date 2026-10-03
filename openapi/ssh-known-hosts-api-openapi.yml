@@ -71,6 +71,15 @@ components:
           type: string
         keyType:
           type: string
+    KnownHostsResponse:
+      type: object
+      properties:
+        hosts:
+          type: array
+          items:
+            $ref: '#/components/schemas/KnownHost'
+        total:
+          type: integer
     KnownHost:
       type: object
       properties:
@@ -87,15 +96,6 @@ components:
         addedAt:
           type: string
           format: date-time
-    KnownHostsResponse:
-      type: object
-      properties:
-        hosts:
-          type: array
-          items:
-            $ref: '#/components/schemas/KnownHost'
-        total:
-          type: integer
   securitySchemes:
     BearerAuth:
       type: http
