@@ -86,6 +86,17 @@ paths:
           description: Key removed
 components:
   schemas:
+    AuthorizedKeyCreate:
+      type: object
+      required:
+      - publicKey
+      properties:
+        publicKey:
+          type: string
+        comment:
+          type: string
+        options:
+          type: string
     AuthorizedKeysResponse:
       type: object
       properties:
@@ -110,17 +121,6 @@ components:
         addedAt:
           type: string
           format: date-time
-    AuthorizedKeyCreate:
-      type: object
-      required:
-      - publicKey
-      properties:
-        publicKey:
-          type: string
-        comment:
-          type: string
-        options:
-          type: string
   securitySchemes:
     BearerAuth:
       type: http

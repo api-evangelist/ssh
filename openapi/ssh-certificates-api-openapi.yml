@@ -70,42 +70,6 @@ paths:
                 $ref: '#/components/schemas/CertificateListResponse'
 components:
   schemas:
-    CertificateSignRequest:
-      type: object
-      required:
-      - publicKey
-      - principals
-      properties:
-        publicKey:
-          type: string
-          description: Public key to sign in OpenSSH format
-        principals:
-          type: array
-          items:
-            type: string
-          description: List of usernames or hostnames the certificate is valid for
-        validityPeriod:
-          type: string
-          description: Certificate validity period (e.g., 8h, 1d, 30d)
-          default: 8h
-        certType:
-          type: string
-          enum:
-          - user
-          - host
-          default: user
-        extensions:
-          type: object
-          description: Certificate extensions (e.g., permit-pty, permit-user-rc)
-    CertificateListResponse:
-      type: object
-      properties:
-        certificates:
-          type: array
-          items:
-            $ref: '#/components/schemas/SSHCertificate'
-        total:
-          type: integer
     SSHCertificate:
       type: object
       properties:
@@ -133,6 +97,42 @@ components:
           - host
         fingerprint:
           type: string
+    CertificateListResponse:
+      type: object
+      properties:
+        certificates:
+          type: array
+          items:
+            $ref: '#/components/schemas/SSHCertificate'
+        total:
+          type: integer
+    CertificateSignRequest:
+      type: object
+      required:
+      - publicKey
+      - principals
+      properties:
+        publicKey:
+          type: string
+          description: Public key to sign in OpenSSH format
+        principals:
+          type: array
+          items:
+            type: string
+          description: List of usernames or hostnames the certificate is valid for
+        validityPeriod:
+          type: string
+          description: Certificate validity period (e.g., 8h, 1d, 30d)
+          default: 8h
+        certType:
+          type: string
+          enum:
+          - user
+          - host
+          default: user
+        extensions:
+          type: object
+          description: Certificate extensions (e.g., permit-pty, permit-user-rc)
   securitySchemes:
     BearerAuth:
       type: http

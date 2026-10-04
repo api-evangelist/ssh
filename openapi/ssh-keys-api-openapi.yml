@@ -131,38 +131,29 @@ paths:
           description: Key deleted
 components:
   schemas:
-    SSHKey:
+    KeyListResponse:
       type: object
       properties:
-        id:
-          type: string
-          description: Unique key identifier
-        userId:
-          type: string
-          description: Owner user ID
-        keyType:
-          type: string
-          enum:
-          - rsa
-          - ed25519
-          - ecdsa
-          - dsa
+        keys:
+          type: array
+          items:
+            $ref: '#/components/schemas/SSHKey'
+        total:
+          type: integer
+        page:
+          type: integer
+    KeyCreate:
+      type: object
+      required:
+      - publicKey
+      properties:
         publicKey:
           type: string
-          description: Public key in OpenSSH format
-        fingerprint:
-          type: string
-          description: SHA-256 fingerprint of the key
+          description: SSH public key in OpenSSH format
         comment:
           type: string
-          description: Key comment (typically user@host)
-        createdAt:
+        userId:
           type: string
-          format: date-time
-        lastUsedAt:
-          type: string
-          format: date-time
-          nullable: true
     KeyPair:
       type: object
       properties:
@@ -198,29 +189,38 @@ components:
         passphrase:
           type: string
           description: Optional passphrase to encrypt the private key
-    KeyListResponse:
+    SSHKey:
       type: object
       properties:
-        keys:
-          type: array
-          items:
-            $ref: '#/components/schemas/SSHKey'
-        total:
-          type: integer
-        page:
-          type: integer
-    KeyCreate:
-      type: object
-      required:
-      - publicKey
-      properties:
-        publicKey:
+        id:
           type: string
-          description: SSH public key in OpenSSH format
-        comment:
-          type: string
+          description: Unique key identifier
         userId:
           type: string
+          description: Owner user ID
+        keyType:
+          type: string
+          enum:
+          - rsa
+          - ed25519
+          - ecdsa
+          - dsa
+        publicKey:
+          type: string
+          description: Public key in OpenSSH format
+        fingerprint:
+          type: string
+          description: SHA-256 fingerprint of the key
+        comment:
+          type: string
+          description: Key comment (typically user@host)
+        createdAt:
+          type: string
+          format: date-time
+        lastUsedAt:
+          type: string
+          format: date-time
+          nullable: true
     ErrorResponse:
       type: object
       properties:
@@ -229,14 +229,14 @@ components:
         message:
           type: string
   responses:
-    BadRequest:
-      description: Invalid request
+    NotFound:
+      description: Resource not found
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    NotFound:
-      description: Resource not found
+    BadRequest:
+      description: Invalid request
       content:
         application/json:
           schema:
