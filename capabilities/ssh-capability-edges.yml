@@ -1,0 +1,53 @@
+slug: ssh
+provider: SSH
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 4
+edges:
+- tag: Authorized Keys
+  spec_file: ssh-authorized-keys-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.85
+  evidence: GET /authorized-keys/{username}, POST addAuthorizedKey, DELETE removeAuthorizedKey; "managing
+    SSH keys, certificates, and access policies"
+  reason: Grants and revokes per-user SSH access credentials on hosts — directly identity and access management
+    for infrastructure login.
+- tag: Keys
+  spec_file: ssh-keys-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.85
+  evidence: '"Generate Key Pair", "Add SSH Key", "Delete SSH Key"; schemas SSHKey, KeyPair'
+  reason: Full lifecycle of SSH key credentials (generate, register, retrieve, revoke) used for authenticated
+    infrastructure access — identity and access / credential management.
+- tag: Certificates
+  spec_file: ssh-certificates-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.8
+  evidence: POST /certificates  signCertificate  "Sign SSH Certificate"; schema CertificateSignRequest
+  reason: Certificate authority issuance of SSH certificates used to authenticate access — credential
+    issuance within identity and access management.
+- tag: Known Hosts
+  spec_file: ssh-known-hosts-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.7
+  evidence: POST /known-hosts  addKnownHost  Add Known Host; "host key verification"
+  reason: SSH key/host-key management for infrastructure access is identity and access management tooling
+    under Cybersecurity Management; host key verification is a trust/authentication control, hence IAM
+    as nearest fit though somewhat generic.
