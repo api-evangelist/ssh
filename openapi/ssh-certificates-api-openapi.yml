@@ -97,15 +97,6 @@ components:
           - host
         fingerprint:
           type: string
-    CertificateListResponse:
-      type: object
-      properties:
-        certificates:
-          type: array
-          items:
-            $ref: '#/components/schemas/SSHCertificate'
-        total:
-          type: integer
     CertificateSignRequest:
       type: object
       required:
@@ -133,6 +124,15 @@ components:
         extensions:
           type: object
           description: Certificate extensions (e.g., permit-pty, permit-user-rc)
+    CertificateListResponse:
+      type: object
+      properties:
+        certificates:
+          type: array
+          items:
+            $ref: '#/components/schemas/SSHCertificate'
+        total:
+          type: integer
   securitySchemes:
     BearerAuth:
       type: http

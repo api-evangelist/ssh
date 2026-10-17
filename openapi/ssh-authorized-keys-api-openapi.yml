@@ -86,26 +86,6 @@ paths:
           description: Key removed
 components:
   schemas:
-    AuthorizedKeyCreate:
-      type: object
-      required:
-      - publicKey
-      properties:
-        publicKey:
-          type: string
-        comment:
-          type: string
-        options:
-          type: string
-    AuthorizedKeysResponse:
-      type: object
-      properties:
-        username:
-          type: string
-        keys:
-          type: array
-          items:
-            $ref: '#/components/schemas/AuthorizedKey'
     AuthorizedKey:
       type: object
       properties:
@@ -121,6 +101,26 @@ components:
         addedAt:
           type: string
           format: date-time
+    AuthorizedKeysResponse:
+      type: object
+      properties:
+        username:
+          type: string
+        keys:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthorizedKey'
+    AuthorizedKeyCreate:
+      type: object
+      required:
+      - publicKey
+      properties:
+        publicKey:
+          type: string
+        comment:
+          type: string
+        options:
+          type: string
   securitySchemes:
     BearerAuth:
       type: http
