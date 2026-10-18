@@ -57,6 +57,12 @@ apis:
   baseURL: https://teleport.example.com/v1
   tags:
   - SSH
+  - Identity and Access Management
+  - Certificate Authority
+  - Zero Trust
+  - Privileged Access Management
+  tags_raw:
+  - SSH
   - Access Management
   - Certificate Authority
   - Zero Trust
