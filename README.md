@@ -1,4 +1,4 @@
-# SSH (ssh)
+# SSH
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,84 +66,165 @@
 
 SSH (Secure Shell) is a cryptographic network protocol for secure remote login, command execution, and file transfer between computers over unsecured networks. It provides strong encryption, authentication, and data integrity, replacing insecure protocols like Telnet and rlogin. SSH is a fundamental tool for system administration, DevOps, and secure infrastructure access. Multiple vendors provide SSH client libraries, server implementations, and management APIs.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/ssh/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/ssh/refs/heads/main/apis.yml)
+**Areas:** SSH · Secure Shell · Remote Access · Cryptography · Network Security · System Administration
 
-## Scope
+## SSH on APIs.io
 
-- **Type:** Index
+Everything profiled for SSH is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/ssh/](https://apis.io/providers/ssh/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (6)
 
-- SSH
-- Secure Shell
-- Remote Access
-- Cryptography
-- Network Security
-- System Administration
+- [Teleport Access Management API](https://apis.io/apis/ssh/teleport-api/) — Teleport is a modern SSH infrastructure access platform providing certificate-based authentication, session recording, audit logging, and role-based access…
+- [SSH Authorized Keys API](https://apis.io/apis/ssh/ssh-authorized-keys-api/) — Authorized keys management for users
+- [SSH Certificates API](https://apis.io/apis/ssh/ssh-certificates-api/) — SSH certificate authority and certificate signing
+- [SSH Host Keys API](https://apis.io/apis/ssh/ssh-host-keys-api/) — SSH server host key management
+- [SSH Keys API](https://apis.io/apis/ssh/ssh-keys-api/) — SSH key pair management
+- [SSH Known Hosts API](https://apis.io/apis/ssh/ssh-known-hosts-api/) — Known hosts verification and management
 
-## Timestamps
+### Published properties
 
-- **Created:** 2025-01-01
-- **Modified:** 2026-05-19
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### Agentic access (1)
 
-### OpenSSH Key Management API
+Which operations an agent can call, which act, and which need a human in the loop.
 
-OpenSSH is the premier open-source SSH implementation. While SSH itself is a protocol, OpenSSH provides programmatic interfaces for key management, authorized_keys configuration, known_hosts management, and integration with PAM and certificate authorities. SSH certificate authorities enable large-scale key management via short-lived certificates.
+- [Ssh Agentic Access](https://apis.io/agentic-access/ssh/ssh-agentic-access/)
 
-- **Human URL:** [https://www.openssh.com/](https://www.openssh.com/)
-- **Base URL:** `https://api.openssh.example.com/v1`
+#### JSON Schema (1)
 
-#### Tags
+The data models the API reads and writes.
 
-- SSH
-- OpenSSH
-- Key Management
-- Certificate Authority
-- Authentication
+- [SSH Key](https://apis.io/schemas/ssh/ssh-key/)
 
-#### Properties
+#### JSON Structure (1)
 
-- [Documentation](https://www.openssh.com/manual.html)
-- [OpenAPI](https://raw.githubusercontent.com/api-evangelist/ssh/refs/heads/main/openapi/ssh-key-management-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/ssh-key-management.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/ssh-key-management.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Data models expressed in JSON Structure.
 
-### Teleport Access Management API
+- [Ssh Key Structure](https://apis.io/json-structure/ssh/ssh-key-structure/)
 
-Teleport is a modern SSH infrastructure access platform providing certificate-based authentication, session recording, audit logging, and role-based access control for SSH, Kubernetes, databases, and web applications. Teleport's API enables programmatic management of users, roles, certificates, and access policies.
+#### JSON-LD (1)
 
-- **Human URL:** [https://goteleport.com/](https://goteleport.com/)
-- **Base URL:** `https://teleport.example.com/v1`
+Linked-data contexts for the provider's vocabulary.
 
-#### Tags
+- [Ssh Context](https://apis.io/jsonld/ssh/ssh-context/)
 
-- SSH
-- Access Management
-- Certificate Authority
-- Zero Trust
-- Privileged Access
+#### Vocabulary (1)
 
-#### Properties
+The provider's domain terms, defined.
 
-- [Documentation](https://goteleport.com/docs/)
-- [Postman Collection](collections/ssh-key-management.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/ssh-key-management.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [SSH Protocol Vocabulary](https://apis.io/vocabularies/ssh/ssh-vocabulary/)
 
-## Common Properties
+#### Examples (2)
+
+Example requests and responses.
+
+- [Ssh List Keys Example](https://apis.io/examples/ssh/ssh-list-keys-example/)
+- [Ssh Sign Certificate Example](https://apis.io/examples/ssh/ssh-sign-certificate-example/)
+
+#### Collections (6)
+
+Postman and Open Collection request collections.
+
+- [SSH Key Management Authorized Keys API](https://apis.io/collections/ssh/open-ssh-authorized-keys-api/)
+- [SSH Key Management Authorized Keys Certificates API](https://apis.io/collections/ssh/open-ssh-certificates-api/)
+- [SSH Key Management Authorized Keys Host Keys API](https://apis.io/collections/ssh/open-ssh-host-keys-api/)
+- [SSH Key Management API](https://apis.io/collections/ssh/open-ssh-key-management/)
+- [SSH Key Management Authorized Keys API](https://apis.io/collections/ssh/open-ssh-keys-api/)
+- [SSH Key Management Authorized Keys Known Hosts API](https://apis.io/collections/ssh/open-ssh-known-hosts-api/)
+
+#### Governance rules (2)
+
+Spectral rulesets for the provider's contracts.
+
+- [SSH — jsonschema rules](https://apis.io/rules/ssh/ssh-jsonschema-spectral-rules/)
+- [SSH API Rules](https://apis.io/rules/ssh/ssh-rules/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Ssh Authentication](https://apis.io/security/ssh/ssh-authentication/)
+- [Ssh Domain Security](https://apis.io/security/ssh/ssh-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Ssh Plans Pricing](https://apis.io/plans/ssh/ssh-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Ssh Rate Limits](https://apis.io/rate-limits/ssh/ssh-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Ssh Finops](https://apis.io/finops/ssh/ssh-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://www.openssh.com/)
 - [Documentation](https://www.openssh.com/manual.html)
-- [GitHub Organization](https://github.com/openssh)
-- [OpenAPI](https://raw.githubusercontent.com/api-evangelist/ssh/refs/heads/main/openapi/ssh-key-management-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [JSON Schema](https://raw.githubusercontent.com/api-evangelist/ssh/refs/heads/main/json-schema/ssh-key-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Structure](https://raw.githubusercontent.com/api-evangelist/ssh/refs/heads/main/json-structure/ssh-key-structure.json)
-- [J S O N L D Context](https://raw.githubusercontent.com/api-evangelist/ssh/refs/heads/main/json-ld/ssh-context.jsonld)
-- [Spectral Rules](https://raw.githubusercontent.com/api-evangelist/ssh/refs/heads/main/rules/ssh-rules.yml)
-- [Vocabulary](https://raw.githubusercontent.com/api-evangelist/ssh/refs/heads/main/vocabulary/ssh-vocabulary.yml)
+- [Blog](https://ssh.com/blog/rss.xml)
+- [GitHub](https://github.com/openssh)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 30.2** — thin · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 52.2 |
+| Contract governance | 27.3 |
+| Operational transparency | 10.5 |
+| Developer ergonomics | 23.8 |
+| Access clarity | 7.9 |
+
+**Agent readiness 19.6** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 16.7** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/ssh/](https://apis.io/providers/ssh/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for SSH: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/ssh/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
